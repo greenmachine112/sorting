@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorting Algorithms Visualization</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="algorithm-grid">
+      <div class="sorting-algorithm bubble-sort">
+        <h2>Bubble Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('bubble-sort')">Sort Array</button>
+      </div>
+      <div class="sorting-algorithm selection-sort">
+        <h2>Selection Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('selection-sort')">Sort Array</button>
+      </div>
+      <div class="sorting-algorithm insertion-sort">
+        <h2>Insertion Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('insertion-sort')">Sort Array</button>
+      </div>
+      <div class="sorting-algorithm merge-sort">
+        <h2>Merge Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('merge-sort')">Sort Array</button>
+      </div>
+      <div class="sorting-algorithm quick-sort">
+        <h2>Quick Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('quick-sort')">Sort Array</button>
+      </div>
+      <div class="sorting-algorithm heap-sort">
+        <h2>Heap Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('heap-sort')">Sort Array</button>
+      </div>
+      <div class="sorting-algorithm counting-sort">
+        <h2>Counting Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('counting-sort')">Sort Array</button>
+      </div>
+      <div class="sorting-algorithm radix-sort">
+        <h2>Radix Sort</h2>
+        <div class="array-container"></div>
+        <button class="windows-95-btn expl-btn" onclick="">Explanation</button>
+        <button class="windows-95-btn sort-btn" onclick="startSorting('radix-sort')">Sort Array</button>
+      </div>
+    </div>
+    <button id="start-all-btn" class="windows-95-btn" onclick="startAllSorts()">Start All Sorts</button>
+    <div>
+      <label for="speed-menu" class="windows-95-btn">Sorting Speed:</label>
+      <select id="speed-menu" class="windows-95-btn">
+        <option value="0.5">0.5x</option>
+        <option value="1" selected>1x</option>
+        <option value="2">2x</option>
+      </select>
+    </div>
+  </div>
+  <script src="sort.js" defer></script>
+</body>
+</html>

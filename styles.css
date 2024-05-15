@@ -1,0 +1,96 @@
+  * {
+    font-family: 'Tahoma', sans-serif;
+    font-weight: 200;
+    color: white;
+    background: #d3d3d3;
+    letter-spacing: -1px;
+  }
+
+  ::selection {
+    background: black;
+    color: white;
+  }
+  
+  .container {
+    text-align: right;
+  }
+  
+  .algorithm-grid {
+    background: #d3d3d3;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 10px;
+  }
+  
+  .sorting-algorithm {
+    padding: 10px;
+    background-color: #E4E4E4; 
+    border: 2px solid #BFBFBF; 
+    border-top-color: #FFFFFF;
+    border-left-color: #FFFFFF;
+    border-right-color: #7F7F7F; 
+    border-bottom-color: #7F7F7F; 
+    box-shadow: inset 1px 1px 0px #FFFFFF, inset -1px -1px 0px #7F7F7F; 
+    padding: 15px;
+  }
+
+  .sorting-algorithm h2 {
+    font-size: 17px; 
+    color: white; 
+    text-align: left;
+    margin-top: -10px;
+    padding: 2px;
+    background: darkblue;
+  }
+  
+  .array-container {
+    background: white;
+    border: 1px solid #2E2E2E;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 250px;
+  }
+  
+  .bar {
+    background-color: black;
+    width: 12px;
+    margin-right: 2px;
+  }
+  
+  .sort-btn {
+
+  }
+
+  .expl-btn {
+
+  }
+
+  #start-all-btn {
+
+  }
+
+  .windows-95-btn {
+    font-size: 14px;
+    font-weight: 200;
+    padding: 2px 6px;
+    margin-top: 10px;
+    border: 2px solid #BFBFBF;
+    border-top-color: #FFFFFF;
+    border-left-color: #FFFFFF;
+    border-right-color: #7F7F7F;
+    border-bottom-color: #7F7F7F;
+    background-color: #E4E4E4;
+    color: #000000;
+    cursor: pointer;
+    outline: none;
+    box-shadow: inset 1px 1px 0px #FFFFFF, inset -1px -1px 0px #7F7F7F;
+  }
+
+  .windows-95-btn:active {
+    border-top-color: #7F7F7F;
+    border-left-color: #7F7F7F;
+    border-right-color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
+    box-shadow: inset -1px -1px 0px #7F7F7F, inset 1px 1px 0px #FFFFFF;
+  }
