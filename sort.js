@@ -1,28 +1,33 @@
-//Store the selected speed
+// Store the selected speed
 let selectedSpeed = 1;
 
-//speed-menu event listner
+// speed-menu event listener
 document.getElementById('speed-menu').addEventListener('change', (event) => {
   selectedSpeed = parseFloat(event.target.value);
 });
 
-//Generate an array
+// Generate an array
 function generateArray(length, min, max) {
   return Array.from({ length: length }, () => Math.floor(Math.random() * (max - min + 1)) + min);
 }
 
-//Visualize
-function visualizeArray(array, arrayContainer, isSorted = false) {
+// Visualize
+function visualizeArray(array, arrayContainer, movingIndex = null, isSorted = false) {
   arrayContainer.innerHTML = '';
-  array.forEach(value => {
+  array.forEach((value, index) => {
     const bar = document.createElement('div');
     bar.classList.add('bar');
     bar.style.height = `${value}px`;
+    if (index === movingIndex) {
+      bar.style.backgroundColor = 'red';
+    } else if (isSorted) {
+      bar.style.backgroundColor = 'green';
+    }
     arrayContainer.appendChild(bar);
   });
 }
 
-//Checker
+// Checker
 function isSorted(array) {
   for (let i = 0; i < array.length - 1; i++) {
     if (array[i] > array[i + 1]) {
@@ -32,21 +37,23 @@ function isSorted(array) {
   return true;
 }
 
-//Bubble Sort
+// Bubble Sort
 async function bubbleSort(array, arrayContainer) {
   const len = array.length;
   for (let i = 0; i < len - 1; i++) {
     for (let j = 0; j < len - 1 - i; j++) {
       if (array[j] > array[j + 1]) {
         await swap(array, j, j + 1);
-        visualizeArray(array, arrayContainer);
+        visualizeArray(array, arrayContainer, j + 1);
+      } else {
+        visualizeArray(array, arrayContainer, j);
       }
     }
   }
-  visualizeArray(array, arrayContainer, true); //Boolean for isSorted
+  visualizeArray(array, arrayContainer, null, true);
 }
 
-//Selection Sort
+// Selection Sort
 async function selectionSort(array, arrayContainer) {
   const len = array.length;
   for (let i = 0; i < len - 1; i++) {
@@ -55,16 +62,18 @@ async function selectionSort(array, arrayContainer) {
       if (array[j] < array[minIndex]) {
         minIndex = j;
       }
+      visualizeArray(array, arrayContainer, j);
+      await sleep(100 / selectedSpeed);
     }
     if (minIndex !== i) {
       await swap(array, i, minIndex);
-      visualizeArray(array, arrayContainer);
+      visualizeArray(array, arrayContainer, i);
     }
   }
-  visualizeArray(array, arrayContainer, true);
+  visualizeArray(array, arrayContainer, null, true);
 }
 
-//Insertion Sort
+// Insertion Sort
 async function insertionSort(array, arrayContainer) {
   const len = array.length;
   for (let i = 1; i < len; i++) {
@@ -74,14 +83,14 @@ async function insertionSort(array, arrayContainer) {
       array[j + 1] = array[j];
       j = j - 1;
       await sleep(100 / selectedSpeed);
-      visualizeArray(array, arrayContainer);
+      visualizeArray(array, arrayContainer, j + 1);
     }
     array[j + 1] = key;
   }
-  visualizeArray(array, arrayContainer, true);
+  visualizeArray(array, arrayContainer, null, true);
 }
 
-//Merge Sort
+// Merge Sort
 async function mergeSort(array, arrayContainer, left = 0, right = array.length - 1) {
   if (left >= right) {
     return;
@@ -90,9 +99,9 @@ async function mergeSort(array, arrayContainer, left = 0, right = array.length -
   await mergeSort(array, arrayContainer, left, mid);
   await mergeSort(array, arrayContainer, mid + 1, right);
   await merge(array, arrayContainer, left, mid, right);
-  visualizeArray(array, arrayContainer); //Visualize after each merge
+  visualizeArray(array, arrayContainer);
   if (left === 0 && right === array.length - 1) {
-    visualizeArray(array, arrayContainer, true);
+    visualizeArray(array, arrayContainer, null, true);
   }
 }
 
@@ -108,24 +117,24 @@ async function merge(array, arrayContainer, left, mid, right) {
     } else {
       array[k++] = rightArr[j++];
     }
-    visualizeArray(array, arrayContainer); //Visualize the array during merging
+    visualizeArray(array, arrayContainer, k - 1);
     await sleep(100 / selectedSpeed);
   }
 
   while (i < leftArr.length) {
     array[k++] = leftArr[i++];
-    visualizeArray(array, arrayContainer);
+    visualizeArray(array, arrayContainer, k - 1);
     await sleep(100 / selectedSpeed);
   }
 
   while (j < rightArr.length) {
     array[k++] = rightArr[j++];
-    visualizeArray(array, arrayContainer);
+    visualizeArray(array, arrayContainer, k - 1);
     await sleep(100 / selectedSpeed);
   }
 }
 
-//Quick Sort
+// Quick Sort
 async function quickSort(array, arrayContainer, left = 0, right = array.length - 1) {
   if (left < right) {
     const pivotIndex = await partition(array, arrayContainer, left, right);
@@ -133,7 +142,7 @@ async function quickSort(array, arrayContainer, left = 0, right = array.length -
     await quickSort(array, arrayContainer, pivotIndex + 1, right);
   }
   if (left === 0 && right === array.length - 1) {
-    visualizeArray(array, arrayContainer, true);
+    visualizeArray(array, arrayContainer, null, true);
   }
 }
 
@@ -144,15 +153,15 @@ async function partition(array, arrayContainer, left, right) {
     if (array[j] <= pivot) {
       i++;
       await swap(array, i, j);
-      visualizeArray(array, arrayContainer);
+      visualizeArray(array, arrayContainer, j);
     }
   }
   await swap(array, i + 1, right);
-  visualizeArray(array, arrayContainer);
+  visualizeArray(array, arrayContainer, i + 1);
   return i + 1;
 }
 
-//Heap Sort
+// Heap Sort
 async function heapSort(array, arrayContainer) {
   const len = array.length;
   for (let i = Math.floor(len / 2) - 1; i >= 0; i--) {
@@ -160,10 +169,10 @@ async function heapSort(array, arrayContainer) {
   }
   for (let i = len - 1; i > 0; i--) {
     await swap(array, 0, i);
-    visualizeArray(array, arrayContainer);
+    visualizeArray(array, arrayContainer, 0);
     await heapify(array, i, 0, arrayContainer);
   }
-  visualizeArray(array, arrayContainer, true);
+  visualizeArray(array, arrayContainer, null, true);
 }
 
 async function heapify(array, heapSize, rootIndex, arrayContainer) {
@@ -181,12 +190,12 @@ async function heapify(array, heapSize, rootIndex, arrayContainer) {
 
   if (largest !== rootIndex) {
     await swap(array, rootIndex, largest);
-    visualizeArray(array, arrayContainer);
+    visualizeArray(array, arrayContainer, largest);
     await heapify(array, heapSize, largest, arrayContainer);
   }
 }
 
-//Counting Sort
+// Counting Sort
 async function countingSort(array, arrayContainer) {
   const len = array.length;
   const max = Math.max(...array);
@@ -207,13 +216,13 @@ async function countingSort(array, arrayContainer) {
   }
   for (let i = 0; i < len; i++) {
     array[i] = output[i];
-    visualizeArray(array, arrayContainer);
+    visualizeArray(array, arrayContainer, i);
     await sleep(100 / selectedSpeed);
   }
-  visualizeArray(array, arrayContainer, true);
+  visualizeArray(array, arrayContainer, null, true);
 }
 
-//Radix Sort
+// Radix Sort
 async function radixSort(array, arrayContainer) {
   const max = Math.max(...array);
   let exp = 1;
@@ -221,7 +230,7 @@ async function radixSort(array, arrayContainer) {
     await countingSortByDigit(array, exp, arrayContainer);
     exp *= 10;
   }
-  visualizeArray(array, arrayContainer, true);
+  visualizeArray(array, arrayContainer, null, true);
 }
 
 async function countingSortByDigit(array, exp, arrayContainer) {
@@ -243,12 +252,12 @@ async function countingSortByDigit(array, exp, arrayContainer) {
   }
   for (let i = 0; i < len; i++) {
     array[i] = output[i];
-    visualizeArray(array, arrayContainer);
+    visualizeArray(array, arrayContainer, i);
     await sleep(100 / selectedSpeed);
   }
 }
 
-//Generic swap function
+// Generic swap function
 async function swap(array, a, b) {
   await sleep(100 / selectedSpeed);
   let temp = array[a];
@@ -256,16 +265,16 @@ async function swap(array, a, b) {
   array[b] = temp;
 }
 
-//Generic delay function
+// Generic delay function
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function startSorting(algorithm) {
   const arrayContainer = document.querySelector(`.${algorithm} .array-container`);
-  const array = generateArray(20, 20, 250); //20-250
+  const array = generateArray(43, 20, 250);
   visualizeArray(array, arrayContainer);
-  
+
   switch (algorithm) {
     case 'bubble-sort':
       bubbleSort(array, arrayContainer);
@@ -306,10 +315,10 @@ function startAllSorts() {
     'radix-sort'
   ];
   const arrays = {};
-  
+
   algorithms.forEach(algorithm => {
     const arrayContainer = document.querySelector(`.${algorithm} .array-container`);
-    const array = generateArray(20, 20, 250);
+    const array = generateArray(41, 20, 250);
     arrays[algorithm] = array;
     visualizeArray(array, arrayContainer);
   });
